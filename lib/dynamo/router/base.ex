@@ -24,7 +24,11 @@ defmodule Dynamo.Router.Base do
 
       @doc false
       def service(conn) do
-        dispatch(conn.method, conn.path_info_segments, conn)
+        if conn.method == :HEAD do
+          dispatch(:GET, conn.path_info_segments, conn)
+        else
+          dispatch(conn.method, conn.path_info_segments, conn)
+        end
       end
 
       @doc false
