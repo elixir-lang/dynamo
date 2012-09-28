@@ -57,7 +57,12 @@ defmodule Dynamo.Filters.Static do
   end
 
   defp root_path(root) when is_atom(root) do
-    File.join :code.lib_dir(root), "priv/static"
+    case :code.lib_dir(root) do
+      {:error, :bad_name} ->
+        "priv/static"
+      root_dir ->
+        File.join root_dir, "priv/static"
+    end
   end
 
   defp root_path(root) when is_binary(root) do
