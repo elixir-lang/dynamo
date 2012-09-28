@@ -63,6 +63,17 @@ defmodule Dynamo.HTTP.TestTest do
     assert conn.fetch(:headers).req_headers["X-Code"] == nil
   end
 
+  test :req_body do
+    conn = conn(:POST, "/foo/bar")
+
+    assert_raise Dynamo.HTTP.UnfetchedError, fn ->
+      conn.req_body
+    end
+
+    conn = conn.req_body("foobar")
+    assert conn.fetch(:body).req_body == "foobar"
+  end
+
   test :host do
     conn = conn(:GET, "/foo/bar").fetch(:headers)
     assert conn.req_headers["Host"] == "127.0.0.1"

@@ -12,7 +12,7 @@ defmodule Dynamo.Cowboy.HTTP do
   Record.defmacros __ENV__, :connection,
     [ :req, :path_info_segments, :script_name_segments, :req_headers,
       :params, :cookies, :resp_headers, :resp_cookies, :assigns, :status,
-      :method, :original_method, # :res_charset, :res_type, :session, :req_body,
+      :method, :original_method, :req_body, # :res_charset, :res_type, :session,
       :resp_body, :state ]
 
   use Dynamo.HTTP.Paths
@@ -26,7 +26,7 @@ defmodule Dynamo.Cowboy.HTTP do
     { verb, req }     = R.method(req)
 
     { binary, _ } = R.path req
-    { segments, _, _} = :cowboy_dispatcher.split_path(binary, 
+    { segments, _, _} = :cowboy_dispatcher.split_path(binary,
                          fn(bin) -> :cowboy_http.urldecode(bin, :crash) end)
 
     connection(
@@ -60,7 +60,7 @@ defmodule Dynamo.Cowboy.HTTP do
 
   def path_segments(connection(req: req)) do
     { binary, _ } = R.path req
-    { segments, _, _} = :cowboy_dispatcher.split_path(binary, 
+    { segments, _, _} = :cowboy_dispatcher.split_path(binary,
                          fn(bin) -> :cowboy_http.urldecode(bin, :crash) end)
     segments
   end
@@ -127,8 +127,13 @@ defmodule Dynamo.Cowboy.HTTP do
     connection(conn, req: req, req_headers: Binary.Dict.new(headers))
   end
 
+  def fetch(:body, connection(req: req, req_body: nil) = conn) do
+    { :ok, body, req } = R.body req
+    connection(conn, req: req, req_body: body)
+  end
+
   # The given aspect was already loaded.
-  def fetch(aspect, conn) when aspect in [:params, :cookies, :headers] do
+  def fetch(aspect, conn) when aspect in [:params, :cookies, :headers, :body] do
     conn
   end
 

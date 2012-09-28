@@ -96,6 +96,10 @@ defmodule Dynamo.HTTP.Test do
     connection(conn, cookies: raw_cookies, fetched: [:cookies|fetched])
   end
 
+  def fetch(:body, connection(req_body: req_body, fetched: fetched) = conn) do
+    connection(conn, req_body: req_body, fetched: [:body|fetched])
+  end
+
   ## Test only API
 
   @doc """
@@ -118,6 +122,7 @@ defmodule Dynamo.HTTP.Test do
       script_name_segments: [],
       params: nil,
       req_headers: nil,
+      req_body: nil,
       method: method,
       original_method: method)
 
@@ -140,6 +145,13 @@ defmodule Dynamo.HTTP.Test do
   """
   def req_cookies(cookies, conn) do
     connection(conn, raw_cookies: Binary.Dict.new(cookies))
+  end
+
+  @doc """
+  Sets the body to be read by the request.
+  """
+  def req_body(body, conn) do
+    connection(conn, req_body: body)
   end
 
   @doc """

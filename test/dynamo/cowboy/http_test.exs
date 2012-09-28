@@ -255,6 +255,16 @@ defmodule Dynamo.Cowboy.HTTPTest do
 
   ## Request Body API
 
+  def req_body(conn) do
+    conn = conn.fetch(:body)
+    assert conn.req_body == "foobar"
+    conn
+  end
+
+  test :req_body do
+    assert_success request :post, "/req_body", [{ "Content-Type", "application/x-foobar" }], "foobar"
+  end
+
   def send(conn) do
     assert conn.state == :unset
 
