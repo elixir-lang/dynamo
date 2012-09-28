@@ -40,6 +40,14 @@ defmodule Dynamo.HTTP.Request do
       def req_headers(connection(req_headers: req_headers)) do
         req_headers
       end
+
+      def req_body(connection(req_body: nil)) do
+        raise Dynamo.HTTP.UnfetchedError, aspect: :req_body
+      end
+
+      def req_body(connection(req_body: req_body)) do
+        req_body
+      end
     end
   end
 end
