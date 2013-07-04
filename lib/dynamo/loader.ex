@@ -141,7 +141,7 @@ defmodule Dynamo.Loader do
   end
 
   def handle_call(_arg, _from, _config) do
-    super
+    super(_arg, _from, _config)
   end
 
   @doc false
@@ -159,7 +159,7 @@ defmodule Dynamo.Loader do
   end
 
   def handle_cast(_arg, _config) do
-    super
+    super(_arg, _config)
   end
 
   ## Helpers
