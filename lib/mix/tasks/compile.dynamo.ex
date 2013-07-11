@@ -69,12 +69,13 @@ defmodule Mix.Tasks.Compile.Dynamo do
       to_compile = Mix.Utils.extract_files(source_paths, compile_exts)
       File.mkdir_p!(compile_path)
       Code.delete_path compile_path
-
-      { _current, to_remove } =
-        Mix.Utils.manifest manifest, fn ->
-          compiled = compile_files to_compile, compile_path, root
-          lc { mod, _ } inlist compiled, do: atom_to_binary(mod)
-        end
+      
+      to_remove = Mix.Utils.read_manifest manifest
+      
+      compiled = compile_files to_compile, compile_path, root
+      current  = lc { mod, _ } inlist compiled, do: atom_to_binary(mod)
+      
+      Mix.Utils.update_manifest manifest, current
 
       compile_templates mod, dynamo[:compiled_templates], templates, compile_path
 
