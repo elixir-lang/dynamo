@@ -12,7 +12,7 @@ defmodule Dynamo.Cowboy.ConnectionTest do
   end
 
   def service(conn) do
-    function = binary_to_atom hd(conn.path_segments), :utf8
+    function = :erlang.binary_to_atom hd(conn.path_segments), :utf8
     apply __MODULE__, function, [conn]
   rescue
     exception ->
