@@ -382,7 +382,6 @@ defmodule Dynamo do
       end
     else
       app = dynamo[:otp_app]
-      tmp = "#{app}/tmp/#{dynamo[:env]}/#{app}"
 
       quote location: :keep do
         @doc """
@@ -395,12 +394,7 @@ defmodule Dynamo do
               bin  = String.from_char_list!(list)
               size = size(bin)
 
-              if size > unquote(size(tmp)) do
-                :binary.replace bin, unquote(tmp),
-                  unquote(atom_to_binary(app)), scope: { size, unquote(-size(tmp)) }
-              else
-                bin
-              end
+              Dynamo.Utils.PathHelpers.base_path_for bin
             _ ->
               raise "could not find OTP app #{unquote(dynamo[:otp_app])} for #{inspect __MODULE__}. " <>
                 "This may happen if the directory name is different than the application name."
