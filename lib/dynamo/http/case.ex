@@ -197,6 +197,10 @@ defmodule Dynamo.HTTP.Case do
     do_process endpoint, Dynamo.Connection.Test.new(method, path)
   end
 
+  def process(endpoint, method, path, body) do
+    do_process endpoint, Dynamo.Connection.Test.new(method, path, body)
+  end
+
   defp do_process(endpoint, conn) do
     conn = endpoint.service(conn)
 
