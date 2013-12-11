@@ -1,6 +1,6 @@
 defmodule Dynamo.Router.FiltersTest do
   use ExUnit.Case, async: true
-  import Dynamo.HTTP.Case, only: [process: 3]
+  import Dynamo.HTTP.Case, only: [process: 3, process: 4]
 
   defmodule PrepareFilter do
     def prepare(conn) do
@@ -21,6 +21,22 @@ defmodule Dynamo.Router.FiltersTest do
     conn = process(PrepareApp, :GET, "/foo")
     assert conn.assigns[:value] == 3
     assert conn.status == 200
+  end
+
+  defmodule PrepareBodyApp do
+    use Dynamo.Router
+
+    prepare do: conn.fetch([:body])
+
+    post "/hello" do
+      conn.status(201).resp_body(conn.req_body)
+    end
+  end
+
+  test "prepare filter on body" do
+    conn = process(PrepareBodyApp, :POST, "/hello", "hello")
+    assert conn.status == 201
+    assert conn.sent_body == "hello"
   end
 
   defmodule FinalizeFilter do
