@@ -3,7 +3,7 @@ defmodule Dynamo.Filters.Exceptions do
   A filter that is responsible to catch, log and handle exceptions.
   """
 
-  import Exception, only: [format_stacktrace_entry: 2]
+  import Exception, only: [format_stacktrace_entry: 1]
   @key :dynamo_handle_exceptions
 
   def new(handler) do
@@ -39,7 +39,7 @@ defmodule Dynamo.Filters.Exceptions do
       :erlang.raise(kind, value, stacktrace)
     end
 
-    message = logger_conn(conn) <> logger_reason(kind, value) <> logger_stacktrace(stacktrace, conn.main.root)
+    message = logger_conn(conn) <> logger_reason(kind, value) <> logger_stacktrace(stacktrace)
     message = String.to_char_list!(message)
     :error_logger.error_msg(message)
 
@@ -74,9 +74,9 @@ defmodule Dynamo.Filters.Exceptions do
     "    Reason: (#{kind}) #{inspect(value)}\n"
   end
 
-  defp logger_stacktrace(stacktrace, root) do
+  defp logger_stacktrace(stacktrace) do
     Enum.reduce stacktrace, "Stacktrace:\n", fn(trace, acc) ->
-      acc <> "  " <> format_stacktrace_entry(trace, root) <> "\n"
+      acc <> "  " <> format_stacktrace_entry(trace) <> "\n"
     end
   end
 end
