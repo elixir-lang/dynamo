@@ -9,7 +9,6 @@ defmodule Dynamo.App do
   """
   def start do
     :application.start(:crypto)
-    :application.start(:mimetypes)
 
     case :application.start(:dynamo) do
       :ok -> :ok
