@@ -29,6 +29,6 @@ Restart the Dynamo and now all functions from MyHelpers will also be available i
 
 Sometimes, it may be the case Both `content_for` and `render` macros used in this guide are part of Dynamo helpers. Dynamo ships with a couple helpers that make programming templates a bit easier:
 
-* [Dynamo.Helpers.ContentFor](http://elixir-lang.org/docs/dynamo/Dynamo.Helpers.ContentFor.html) - helpers for passing data in between templates
-* [Dynamo.Helpers.Escaping](http://elixir-lang.org/docs/dynamo/Dynamo.Helpers.Escaping.html) - helpers for escaping html inside templates
-* [Dynamo.Helpers.Rendering](http://elixir-lang.org/docs/dynamo/Dynamo.Helpers.Rendering.html) - helpers for rendering templates inside templates
+* [Dynamo.Helpers.ContentFor](../lib/dynamo/helpers/content_for.ex) - helpers for passing data in between templates
+* [Dynamo.Helpers.Escaping](../lib/dynamo/helpers/escaping.ex) - helpers for escaping html inside templates
+* [Dynamo.Helpers.Rendering](../lib/dynamo/helpers/render.ex) - helpers for rendering templates inside templates
