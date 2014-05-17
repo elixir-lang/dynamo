@@ -59,8 +59,8 @@ defmodule Mix.Tasks.Compile.Dynamo do
     dynamo  = mod.config[:dynamo]
 
     compile_path = Mix.Project.compile_path
-    compile_exts = project[:elixirc_exts]
-    watch_exts   = project[:elixirc_watch_exts]
+    compile_exts = [:ex]
+    watch_exts   = [:ex, :eex, :exs]
     source_paths = dynamo[:source_paths]
     templates    = extract_templates(dynamo[:templates_paths])
 
