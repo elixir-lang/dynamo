@@ -74,7 +74,7 @@ defmodule Mix.Tasks.Compile.Dynamo do
     if opts[:force] || Mix.Utils.stale?(to_watch, [manifest]) do
       set_compiler_opts(project, opts)
 
-      to_compile = Mix.Utils.extract_files(source_paths, compile_exts)
+      to_compile = Mix.Utils.extract_files(source_paths, [:ex])
       File.mkdir_p!(compile_path)
       Code.prepend_path compile_path
 
