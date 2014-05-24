@@ -209,6 +209,31 @@ defmodule PostsRouter do
 end
 ```
 
+Please note that the first argument to `forward` is a full-fledged match pattern which can contain dynamic segments:
+
+```elixir
+defmodule PostsRouter do
+  use Dynamo.Router
+
+  forward "/:post_id/comments", to: CommentsRouter
+
+end
+```
+
+`:post_id` will be available in `CommentsRouter` via `conn.params`, just like it works with simple non-forwarded routers:
+
+```elixir
+defmodule CommentsRouter do
+  use Dynamo.Router
+
+  get "/" do
+    post_id  = conn.params[:post_id]
+    # Get all comment for post_id
+  end
+  
+end
+```
+
 Finally, in the `ApplicationRouter` above, notice we fetch cookies and the request params for every request. However, if just the `PostsRouter` is using such information, the `prepare` hook could be moved to inside the `PostsRouter`, so it will be fetched only when it is needed.
 
 This forwarding mechanism makes it very easy to split and organize your code into its logical sections while also having control on which features are required by each router.
