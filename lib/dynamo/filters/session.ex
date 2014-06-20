@@ -25,7 +25,9 @@ defmodule Dynamo.Filters.Session do
 
   """
 
-  defexception CookieOverflowError, message: "the session cookie exceeds the 4kb limit"
+  defmodule CookieOverflowError do
+    defexception  [message: "the session cookie exceeds the 4kb limit"]
+  end
 
   @limit   4096
   @session :dynamo_session

@@ -12,7 +12,7 @@ defmodule Dynamo.Loader do
   dynamos in the node.
   """
 
-  use GenServer.Behaviour
+  use GenServer
 
   @doc """
   Enables the reloader in the given process and returns

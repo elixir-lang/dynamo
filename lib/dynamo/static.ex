@@ -1,7 +1,7 @@
 defmodule Dynamo.Static do
   @moduledoc false
 
-  use GenServer.Behaviour
+  use GenServer
 
   @doc """
   Looks up a static asset in the given Dynamo. If the
