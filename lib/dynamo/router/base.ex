@@ -1,4 +1,6 @@
-defexception Dynamo.Router.InvalidHookError, kind: nil, hook: nil, actual: nil do
+defmodule Dynamo.Router.InvalidHookError do
+  defexception [kind: nil, hook: nil, actual: nil]
+
   def message(exception) do
     "expected #{exception.kind} hook #{inspect exception.hook} to return " <>
       "a HTTP connection, but got #{inspect exception.actual}"

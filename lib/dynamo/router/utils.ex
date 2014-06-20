@@ -1,4 +1,6 @@
-defexception Dynamo.Router.InvalidSpecError, message: "invalid route specification"
+defmodule Dynamo.Router.InvalidSpecError do
+  defexception [message: "invalid route specification"]
+end
 
 defmodule Dynamo.Router.Utils do
   @moduledoc false
