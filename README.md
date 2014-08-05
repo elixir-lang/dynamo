@@ -8,7 +8,7 @@ Dynamo is an experimental web framework that runs on [Elixir](http://elixir-lang
 
 As an experiment, Dynamo is as alpha-software as alpha gets. The main goal for Dynamo was to be a testbed for ideas and many of its APIs were extracted and improved into separated projects like [Plug](http://github.com/elixir-lang/plug).
 
-**Dynamo is currently in maintenance mode for those who are already using it in production. Developers who seek for an actively developed framework are recommended to look for other alternatives in Elixir.**
+**Dynamo is currently in maintenance mode for those who are already using it in production. Developers who seek an actively developed framework are recommended to look for other alternatives in Elixir.**
 
 # Description
 
